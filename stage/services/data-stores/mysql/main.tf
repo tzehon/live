@@ -16,7 +16,7 @@ terraform {
 }
 
 module "database" {
-  source = "../../../../modules/services/data-stores/mysql"
+  source = "github.com/tzehon/terraform_modules//services/data-stores/mysql?ref=v0.0.1"
 
   db_username = var.db_username
   db_password = var.db_password
