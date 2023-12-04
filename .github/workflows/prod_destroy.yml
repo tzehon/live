@@ -9,9 +9,11 @@ env:
     TF_VAR_service_name: ${{ vars.SERVICE_NAME }}
     TF_VAR_scheduler_name: ${{ vars.SCHEDULER_NAME }}
     TF_VAR_project_id: ${{ vars.PROJECT_ID }}
+    TF_VAR_secret_id: ${{ secrets.SECRET_ID }}
+    TF_VAR_secret_value: ${{ secrets.SECRET_VALUE }}
 
 jobs:
-  destroy:
+  destroy_scheduler_with_data_puller:
     environment:
       name: prod
       url: ${{ github.server_url }}/${{ github.repository }}/actions
@@ -34,5 +36,31 @@ jobs:
     - name: Terraform Init and Destroy
       run: |
         cd prod/services/scheduler
+        terraform init
+        terraform destroy -auto-approve
+
+  destroy_secret_manager:
+    environment:
+      name: prod
+      url: ${{ github.server_url }}/${{ github.repository }}/actions
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v0.4.0
+      with:
+        workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
+        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
+        project_id: ${{ vars.PROJECT_ID }}
+
+    - name: Terraform Init and Destroy
+      run: |
+        cd prod/services/secret_manager
         terraform init
         terraform destroy -auto-approve
