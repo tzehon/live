@@ -12,10 +12,14 @@ env:
 
 jobs:
   destroy:
-    runs-on: ubuntu-latest
     environment:
       name: prod
       url: ${{ github.server_url }}/${{ github.repository }}/actions
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
     steps:
     - name: Checkout
       uses: actions/checkout@v4
