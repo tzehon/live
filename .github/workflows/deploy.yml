@@ -19,7 +19,7 @@ jobs:
       uses: google-github-actions/auth@v0.4.0
       with:
         workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
-        service_account: 72746050019-compute@developer.gserviceaccount.com
+        service_account: github-cicd@tth-prop-analysis.iam.gserviceaccount.com
         project_id: tth-prop-analysis
 
     - name: Terraform Init and Apply
