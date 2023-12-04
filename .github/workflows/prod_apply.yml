@@ -14,17 +14,21 @@ env:
   TF_VAR_secret_value: ${{ secrets.SECRET_VALUE }}
 
 jobs:
-  deploy_scheduler_with_data_puller:
+  setup:
     environment:
       name: prod
+    outputs:
+      project_id: ${{ vars.PROJECT_ID }}
     runs-on: ubuntu-latest
 
     permissions:
       id-token: write
       contents: read
     steps:
-    - name: Checkout Code
+    - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        path: 'repo'
 
     - name: Authenticate to GCP
       uses: google-github-actions/auth@v0.4.0
@@ -33,32 +37,43 @@ jobs:
         service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
         project_id: ${{ vars.PROJECT_ID }}
 
-    - name: Terraform Init and Apply
+    - name: Upload repository
+      uses: actions/upload-artifact@v2
+      with:
+        name: repo
+        path: repo
+
+  deploy_scheduler_with_data_puller:
+    needs: setup
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    steps:
+    - name: Download Repository
+      uses: actions/download-artifact@v2
+      with:
+        name: repo
+        path: .
+
+    - name: Terraform init and apply for scheduler
       run: |
         cd prod/services/scheduler
         terraform init
         terraform apply -auto-approve
 
   deploy_secret_manager:
+    needs: setup
+    runs-on: ubuntu-latest
     environment:
       name: prod
-    runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@v0.4.0
+    - name: Download Repository
+      uses: actions/download-artifact@v2
       with:
-        workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
-        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
-        project_id: ${{ vars.PROJECT_ID }}
+        name: repo
+        path: .
 
-    - name: Terraform Init and Apply
+    - name: Terraform init and apply for secret manager
       run: |
         cd prod/services/secret_manager
         terraform init
