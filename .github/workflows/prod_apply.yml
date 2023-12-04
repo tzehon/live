@@ -1,4 +1,4 @@
-name: Deploy to Production with Workload Identity Federation
+name: Deploy to production
 
 on:
   push:
