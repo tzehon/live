@@ -4,12 +4,13 @@ on:
   push:
     branches:
       - main
+env:
+  name: prod
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: prod
+
     env:
       TF_VAR_url: ${{ vars.URL }}
       TF_VAR_region: ${{ vars.REGION }}
