@@ -20,6 +20,7 @@ jobs:
       with:
         workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
         service_account: 72746050019-compute@developer.gserviceaccount.com
+        project_id: tth-prop-analysis
 
     - name: Terraform Init and Apply
       run: |
