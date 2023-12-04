@@ -28,8 +28,8 @@ jobs:
       uses: google-github-actions/auth@v0.4.0
       with:
         workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
-        service_account: github-actions@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
-        project_id: ${{ env.PROJECT_ID }}
+        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
+        project_id: ${{ vars.PROJECT_ID }}
 
     - name: Terraform Init and Destroy
       run: |
