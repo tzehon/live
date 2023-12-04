@@ -28,8 +28,8 @@ jobs:
       uses: google-github-actions/auth@v0.4.0
       with:
         workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
-        service_account: github-actions@tth-prop-analysis.iam.gserviceaccount.com
-        project_id: tth-prop-analysis
+        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
+        project_id: ${{ vars.PROJECT_ID }}
 
     - name: Terraform Init and Apply
       run: |
