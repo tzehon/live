@@ -17,27 +17,15 @@ jobs:
   setup:
     environment:
       name: prod
-    outputs:
-      project_id: ${{ vars.PROJECT_ID }}
     runs-on: ubuntu-latest
 
-    permissions:
-      id-token: write
-      contents: read
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         path: 'repo'
 
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@v0.4.0
-      with:
-        workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
-        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
-        project_id: ${{ vars.PROJECT_ID }}
-
-    - name: Upload repository
+    - name: Upload repo
       uses: actions/upload-artifact@v2
       with:
         name: repo
@@ -46,14 +34,27 @@ jobs:
   deploy_scheduler_with_data_puller:
     needs: setup
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
     environment:
       name: prod
+
     steps:
-    - name: Download Repository
+    - name: Download repo
       uses: actions/download-artifact@v2
       with:
         name: repo
         path: .
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v0.4.0
+      with:
+        workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
+        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
+        project_id: ${{ vars.PROJECT_ID }}
 
     - name: Terraform init and apply for scheduler
       run: |
@@ -64,14 +65,26 @@ jobs:
   deploy_secret_manager:
     needs: setup
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
     environment:
       name: prod
     steps:
-    - name: Download Repository
+    - name: Download repo
       uses: actions/download-artifact@v2
       with:
         name: repo
         path: .
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v0.4.0
+      with:
+        workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
+        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
+        project_id: ${{ vars.PROJECT_ID }}
 
     - name: Terraform init and apply for secret manager
       run: |
