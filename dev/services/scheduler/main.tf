@@ -11,4 +11,6 @@ module "scheduled_job" {
   service_name   = var.service_name
   region         = var.region
   url            = var.url
+  secret_id      = var.secret_id
+  secret_value   = var.secret_value
 }
