@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'scheduler/**'
+      - 'prod/services/scheduler/**'
   workflow_dispatch:
 
 env:

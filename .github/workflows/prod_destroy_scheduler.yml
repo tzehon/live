@@ -1,4 +1,4 @@
-name: Destroy prod
+name: Destroy prod scheduler
 
 on:
   workflow_dispatch:
