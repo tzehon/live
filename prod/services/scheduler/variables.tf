@@ -20,7 +20,7 @@ variable "region" {
 }
 
 variable "url" {
-  description = "The url to the image"
+  description = "The url to the image repo"
   type        = string
 }
 
