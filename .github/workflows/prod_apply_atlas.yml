@@ -37,6 +37,20 @@ jobs:
         name: repo
         path: repo
 
+  deploy_atlas:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    environment:
+      name: prod
+
+    steps:
+    - name: Download repo
+      uses: actions/download-artifact@v2
+      with:
+        name: repo
+        path: .
+
     - name: Terraform init and apply for atlas
       run: |
         cd prod/services/data-stores/atlas
