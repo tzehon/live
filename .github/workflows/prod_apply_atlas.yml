@@ -9,13 +9,15 @@ on:
   workflow_dispatch:
 
 env:
-  TF_VAR_url: ${{ vars.URL }}
-  TF_VAR_region: ${{ vars.REGION }}
-  TF_VAR_service_name: ${{ vars.SERVICE_NAME }}
-  TF_VAR_scheduler_name: ${{ vars.SCHEDULER_NAME }}
-  TF_VAR_project_id: ${{ vars.PROJECT_ID }}
-  TF_VAR_secret_id: ${{ secrets.SECRET_ID }}
-  TF_VAR_secret_value: ${{ secrets.SECRET_VALUE }}
+  TF_VAR_project_id: ${{ vars.ATLAS_PROJECT_ID }}
+  TF_VAR_public_key: ${{ secrets.ATLAS_PUBLIC_KEY }}
+  TF_VAR_private_key: ${{ secrets.ATLAS_PRIVATE_KEY }}
+  TF_VAR_provider_name: ${{ vars.ATLAS_PROVIDER_NAME }}
+  TF_VAR_backing_provider_name: ${{ vars.ATLAS_BACKING_PROVIDER_NAME }}
+  TF_VAR_provider_instance_size_name: ${{ vars.ATLAS_PROVIDER_INSTANCE_SIZE_NAME }}
+  TF_VAR_cluster_name: ${{ vars.ATLAS_CLUSTER_NAME }}
+  TF_VAR_user_name: ${{ secrets.ATLAS_USER_NAME }}
+  TF_VAR_password: ${{ secrets.ATLAS_PASSWORD }}
 
 jobs:
   setup:
@@ -35,33 +37,8 @@ jobs:
         name: repo
         path: repo
 
-  deploy_scheduler_with_data_puller:
-    needs: setup
-    runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
-
-    environment:
-      name: prod
-
-    steps:
-    - name: Download repo
-      uses: actions/download-artifact@v2
-      with:
-        name: repo
-        path: .
-
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@v0.4.0
-      with:
-        workload_identity_provider: projects/72746050019/locations/global/workloadIdentityPools/github/providers/live
-        service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
-        project_id: ${{ vars.PROJECT_ID }}
-
-    - name: Terraform init and apply for scheduler
+    - name: Terraform init and apply for atlas
       run: |
-        cd prod/services/scheduler
+        cd prod/services/data-stores/atlas
         terraform init
         terraform apply -auto-approve
