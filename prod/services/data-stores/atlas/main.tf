@@ -16,7 +16,7 @@ terraform {
       source = "mongodb/mongodbatlas"
     }
   }
- }
+}
 
 provider "mongodbatlas" {
   public_key  = var.public_key
@@ -34,10 +34,11 @@ resource "mongodbatlas_advanced_cluster" "cluster" {
     region_configs {
       electable_specs {
         instance_size = var.provider_instance_size_name
+        node_count    = 3
       }
-      provider_name         = var.backing_provider_name
-      region_name           = "SOUTHEASTERN_ASIA_PACIFIC"
-      priority              = 7
+      provider_name = var.backing_provider_name
+      region_name   = "SOUTHEASTERN_ASIA_PACIFIC"
+      priority      = 7
     }
   }
 
