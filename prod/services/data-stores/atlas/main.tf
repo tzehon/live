@@ -16,6 +16,11 @@ terraform {
       source = "mongodb/mongodbatlas"
     }
   }
+
+  backend "gcs" {
+    bucket = "tth-prop-analysis-bucket"
+    prefix = "prod/atlas/terraform.tfstate"
+  }
 }
 
 provider "mongodbatlas" {
