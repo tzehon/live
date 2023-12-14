@@ -49,6 +49,6 @@ resource "mongodbatlas_advanced_cluster" "cluster" {
 
   tags {
     key   = "environment"
-    value = "dev"
+    value = "prod"
   }
 }
