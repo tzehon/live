@@ -11,6 +11,7 @@ env:
     TF_VAR_project_id: ${{ vars.PROJECT_ID }}
     TF_VAR_secret_id: ${{ secrets.SECRET_ID }}
     TF_VAR_secret_value: ${{ secrets.SECRET_VALUE }}
+    TF_VAR_cidr_range: ${{ vars.CIDR_RANGE }}
 
 jobs:
   setup:
