@@ -20,5 +20,6 @@ module "scheduled_job" {
   url            = var.url
   secret_id      = var.secret_id
   secret_value   = var.secret_value
+  connector_name = var.connector_name
   cidr_range     = var.cidr_range
 }
