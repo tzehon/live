@@ -40,7 +40,7 @@ resource "mongodbatlas_project_ip_access_list" "ip_access_list" {
 }
 
 data "terraform_remote_state" "scheduled_job" {
-  backend = "remote"
+  backend = "gcs"
 
   config = {
     bucket = "tth-prop-analysis-bucket"
