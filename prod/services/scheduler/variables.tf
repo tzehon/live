@@ -13,7 +13,6 @@ variable "scheduler_name" {
   type        = string
 }
 
-
 variable "region" {
   description = "The preferred GCP region"
   type        = string

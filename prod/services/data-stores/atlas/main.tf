@@ -23,9 +23,29 @@ terraform {
   }
 }
 
+ provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
+}
+
 provider "mongodbatlas" {
   public_key  = var.public_key
   private_key = var.private_key
+}
+
+resource "mongodbatlas_project_ip_access_list" "ip_access_list" {
+  project_id = var.project_id
+  ip_address = data.terraform_remote_state.scheduled_job.outputs.external_ip_address
+  comment    = "prop-puller external IP"
+}
+
+data "terraform_remote_state" "scheduled_job" {
+  backend = "remote"
+
+  config = {
+    bucket = "tth-prop-analysis-bucket"
+    prefix = "prod/scheduled_job/terraform.tfstate"
+  }
 }
 
 resource "mongodbatlas_advanced_cluster" "cluster" {

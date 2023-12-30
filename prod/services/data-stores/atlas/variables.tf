@@ -45,3 +45,13 @@ variable "password" {
   description = "Atlas admin user password"
   type        = string
 }
+
+variable "gcp_project_id" {
+  description = "The GCP project ID"
+  type        = string
+}
+
+variable "gcp_region" {
+  description = "The preferred GCP region"
+  type        = string
+}
