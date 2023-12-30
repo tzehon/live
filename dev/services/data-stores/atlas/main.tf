@@ -23,6 +23,20 @@ provider "mongodbatlas" {
   private_key = var.private_key
 }
 
+data "terraform_remote_state" "scheduled_job" {
+  backend = "local"
+
+  config = {
+    path = "../../scheduler/terraform.tfstate"
+  }
+}
+
+resource "mongodbatlas_project_ip_access_list" "ip_access_list" {
+  project_id = var.project_id
+  ip_address = data.terraform_remote_state.scheduled_job.outputs.external_ip_address
+  comment    = "prop-puller external IP"
+}
+
 resource "mongodbatlas_advanced_cluster" "cluster" {
   project_id   = var.project_id
   name         = var.cluster_name
