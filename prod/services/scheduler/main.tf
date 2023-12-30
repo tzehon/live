@@ -11,7 +11,7 @@ terraform {
 }
 
 module "scheduled_job" {
-  source = "github.com/tzehon/terraform_modules//services/scheduled-job?ref=v0.0.10"
+  source = "github.com/tzehon/terraform_modules//services/scheduled-job?ref=v0.0.11"
 
   project_id     = var.project_id
   scheduler_name = var.scheduler_name
@@ -22,4 +22,6 @@ module "scheduled_job" {
   secret_value   = var.secret_value
   connector_name = var.connector_name
   cidr_range     = var.cidr_range
+  router_name    = var.router_name
+  ip_name        = var.ip_name
 }
