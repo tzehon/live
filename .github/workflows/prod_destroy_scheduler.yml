@@ -9,8 +9,14 @@ env:
     TF_VAR_service_name: ${{ vars.SERVICE_NAME }}
     TF_VAR_scheduler_name: ${{ vars.SCHEDULER_NAME }}
     TF_VAR_project_id: ${{ vars.PROJECT_ID }}
-    TF_VAR_secret_id: ${{ secrets.SECRET_ID }}
-    TF_VAR_secret_value: ${{ secrets.SECRET_VALUE }}
+    TF_VAR_access_key_id: ${{ secrets.ACCESS_KEY_ID }}
+    TF_VAR_access_key_value: ${{ secrets.ACCESS_KEY_VALUE }}
+    TF_VAR_atlas_user_id: ${{ secrets.ATLAS_USER_ID }}
+    TF_VAR_atlas_user_value: ${{ secrets.ATLAS_USER_NAME }}
+    TF_VAR_atlas_password_id: ${{ secrets.ATLAS_PASSWORD_ID }}
+    TF_VAR_atlas_password_value: ${{ secrets.ATLAS_PASSWORD }}
+    TF_VAR_atlas_connection_string_id: ${{ secrets.ATLAS_CONNECTION_STRING_ID }}
+    TF_VAR_atlas_connection_string_value: ${{ secrets.ATLAS_CONNECTION_STRING_VALUE }}
     TF_VAR_connector_name: ${{ vars.CONNECTOR_NAME }}
     TF_VAR_cidr_range: ${{ vars.CIDR_RANGE }}
     TF_VAR_router_name: ${{ vars.ROUTER_NAME }}
