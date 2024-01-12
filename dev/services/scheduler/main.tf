@@ -4,8 +4,8 @@ provider "google" {
 }
 
 module "scheduled_job" {
-  source = "github.com/tzehon/terraform_modules//services/scheduled-job?ref=v0.1.0"
-  # source = "/Users/tth/projects/terraform_modules/services/scheduled-job"
+  # source = "github.com/tzehon/terraform_modules//services/scheduled-job?ref=v0.2.0"
+  source = "/Users/tth/projects/terraform_modules/services/scheduled-job"
 
   project_id                    = var.project_id
   scheduler_name                = var.scheduler_name
