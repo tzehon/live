@@ -60,4 +60,9 @@ resource "mongodbatlas_advanced_cluster" "cluster" {
     key   = "environment"
     value = "dev"
   }
+
+  tags {
+    key   = "author"
+    value = "tth"
+  }
 }
