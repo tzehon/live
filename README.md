@@ -2,8 +2,11 @@ Create service account for Workload Identity Federation with these roles
 ```
 Cloud Run Admin
 Cloud Scheduler Admin
+Compute Network Admin
+Compute Viewer
 Create Service Accounts
 Secret Manager Admin
+Serverless VPC Access Admin
 Service Account Admin
 Service Account Token Creator
 Service Account User
