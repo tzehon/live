@@ -28,25 +28,7 @@ env:
   TF_VAR_ip_name: ${{ vars.IP_NAME }}
 
 jobs:
-  # setup:
-  #   environment:
-  #     name: prod
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4
-  #     with:
-  #       path: 'repo'
-
-  #   - name: Upload repo
-  #     uses: actions/upload-artifact@v2
-  #     with:
-  #       name: repo
-  #       path: repo
-
   deploy_scheduler_with_data_puller:
-    # needs: setup
     runs-on: ubuntu-latest
 
     permissions:
@@ -56,12 +38,6 @@ jobs:
     environment:
       name: prod
 
-    # steps:
-    # - name: Download repo
-    #   uses: actions/download-artifact@v2
-    #   with:
-    #     name: repo
-    #     path: .
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
