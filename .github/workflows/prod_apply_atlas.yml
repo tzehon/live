@@ -65,6 +65,6 @@ jobs:
 
     - name: Terraform init and apply for atlas
       run: |
-        cd prod/services/data-stores/atlas
+        cd repo/prod/services/data-stores/atlas
         terraform init
         terraform apply -auto-approve
