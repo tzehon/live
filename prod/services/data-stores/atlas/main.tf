@@ -74,6 +74,6 @@ resource "mongodbatlas_advanced_cluster" "cluster" {
 
   tags {
     key   = "author"
-    value = "tth"
+    value = "tzehon"
   }
 }
