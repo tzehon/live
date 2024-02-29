@@ -35,17 +35,8 @@ provider "mongodbatlas" {
 
 resource "mongodbatlas_project_ip_access_list" "ip_access_list" {
   project_id = var.project_id
-  ip_address = data.terraform_remote_state.scheduled_job.outputs.external_ip_address
-  comment    = "prop-puller external IP"
-}
-
-data "terraform_remote_state" "scheduled_job" {
-  backend = "gcs"
-
-  config = {
-    bucket = "tth-prop-analysis-bucket"
-    prefix = "prod/scheduled_job/terraform.tfstate"
-  }
+  cidr_block = "0.0.0.0/0"
+  comment    = "Allow access from anywhere"
 }
 
 resource "mongodbatlas_advanced_cluster" "cluster" {
