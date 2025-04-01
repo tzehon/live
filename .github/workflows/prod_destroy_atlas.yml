@@ -50,6 +50,6 @@ jobs:
 
     - name: Terraform init and destroy
       run: |
-        cd prod/services/data-stores/atlas
+        cd repo/prod/services/data-stores/atlas
         terraform init
         terraform destroy -auto-approve
