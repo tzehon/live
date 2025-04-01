@@ -19,20 +19,7 @@ env:
     TF_VAR_atlas_connection_string_value: ${{ secrets.ATLAS_CONNECTION_STRING_VALUE }}
 
 jobs:
-  setup:
-    environment:
-      name: prod
-      url: ${{ github.server_url }}/${{ github.repository }}/actions
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        path: 'repo'
-
-  destroy_scheduler_with_data_puller:
-    needs: setup
+  deploy_scheduler_with_data_puller:
     runs-on: ubuntu-latest
 
     permissions:
@@ -41,13 +28,15 @@ jobs:
 
     environment:
       name: prod
-      url: ${{ github.server_url }}/${{ github.repository }}/actions
+
     steps:
-    - name: Download repo
-      uses: actions/download-artifact@v2
+    - name: Init terraform
+      uses: hashicorp/setup-terraform@v3
+      
+    - name: Checkout repo
+      uses: actions/checkout@v4
       with:
-        name: repo
-        path: .
+        path: 'repo'
 
     - name: Authenticate to GCP
       uses: google-github-actions/auth@v0.4.0
@@ -58,6 +47,6 @@ jobs:
 
     - name: Terraform init and destroy
       run: |
-        cd prod/services/scheduler
+        cd repo/prod/services/scheduler
         terraform init
         terraform destroy -auto-approve
