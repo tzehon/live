@@ -17,20 +17,7 @@ env:
   TF_VAR_gcp_region: ${{ vars.REGION }}
 
 jobs:
-  setup:
-    environment:
-      name: prod
-      url: ${{ github.server_url }}/${{ github.repository }}/actions
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        path: 'repo'
-
   destroy_atlas:
-    needs: setup
     runs-on: ubuntu-latest
 
     permissions:
@@ -39,8 +26,13 @@ jobs:
 
     environment:
       name: prod
-      url: ${{ github.server_url }}/${{ github.repository }}/actions
+
     steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+      with:
+        path: 'repo'
+
     - name: Authenticate to GCP
       uses: google-github-actions/auth@v0.4.0
       with:
@@ -48,7 +40,7 @@ jobs:
         service_account: github-actions@${{ vars.PROJECT_ID }}.iam.gserviceaccount.com
         project_id: ${{ vars.PROJECT_ID }}
 
-    - name: Terraform init and destroy
+    - name: Terraform init and destroy for atlas
       run: |
         cd repo/prod/services/data-stores/atlas
         terraform init
