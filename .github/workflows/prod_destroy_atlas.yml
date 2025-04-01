@@ -29,12 +29,6 @@ jobs:
       with:
         path: 'repo'
 
-    - name: Upload repo
-      uses: actions/upload-artifact@v2
-      with:
-        name: repo
-        path: repo
-
   destroy_atlas:
     needs: setup
     runs-on: ubuntu-latest
